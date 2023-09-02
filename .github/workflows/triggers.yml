@@ -1,0 +1,55 @@
+name: Triggers
+run-name: Uso de diferentes triggers
+on:
+  push:
+    branches:
+      - master
+      - "release/**"
+    paths:
+      - '**.py'
+
+  workflow_dispatch:
+    inputs:
+      language:
+        description: 'Chose a language'
+        default: Python
+        required: true
+        type: choice
+        options:
+          - Python
+          - Go
+          - Rust
+
+      name:
+        description: "Put your name"
+        required: true
+        default: Sebastian
+        type: string
+
+  schedule:
+    - cron: '15 22 * * *'
+
+jobs:
+
+  hola-mundo-manual:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Define name
+        run:  echo "USERNAME=${{ inputs.name }}" >> $GITHUB_ENV
+      - name: Define language
+        run:  echo "LANGUAGE=${{ inputs.language }}" >> $GITHUB_ENV
+      - name: Run Script
+        run:  python hellow-world.py
+
+  hola-mundo:
+    if: ${{ github.event_name != 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Define name
+        run:  echo "USERNAME=${{ github.actor }}" >> $GITHUB_ENV
+      - name: Run Script
+        run:  python hellow-world.py
