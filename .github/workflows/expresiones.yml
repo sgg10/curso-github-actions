@@ -1,0 +1,30 @@
+name: Expressions
+run-name: Uso de expresiones
+
+on:
+  workflow_dispatch:
+    inputs:
+      age:
+        description: Put your age
+        required: true
+        type: integer
+      name:
+        description: Put your name
+        required: true
+        type: string
+
+
+jobs:
+  allow:
+    if: ${{ inputs.age >= 18 || contains(inputs.name, 'sgg10') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run script
+        run: echo ${{ inputs.name }} can enter
+
+  deny:
+    if: ${{ inputs.age < 18 && !contains(inputs.name, 'sgg10') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run script
+        run: echo ${{ inputs.name }} can not enter
