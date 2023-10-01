@@ -35,7 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Define name
         run:  echo "USERNAME=${{ inputs.name }}" >> $GITHUB_ENV
       - name: Define language
@@ -48,7 +48,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Define name
         run:  echo "USERNAME=${{ github.actor }}" >> $GITHUB_ENV
       - name: Run Script
